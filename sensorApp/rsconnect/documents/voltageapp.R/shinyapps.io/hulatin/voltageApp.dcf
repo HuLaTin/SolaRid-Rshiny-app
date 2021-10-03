@@ -1,0 +1,13 @@
+name: voltageApp
+title: voltageApp
+username:
+account: hulatin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1718206
+bundleId: 2759048
+url: https://hulatin.shinyapps.io/voltageApp/
+when: 1580235717.39989
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: app.R
