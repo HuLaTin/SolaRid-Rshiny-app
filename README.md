@@ -1,0 +1,2 @@
+# SolaRid-Rshiny-app
+ 
