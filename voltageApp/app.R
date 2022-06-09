@@ -22,8 +22,10 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                     ),
                     radioButtons("radio", "Normalize?",
                                  c("raw" = "raw",
+                                   "smooth" = "smoove",
                                    "normalize" = "norm")),
-
+                    numericInput("numInput", "Moving Average Window", 10,
+                                 min = 1, max = 100),
                     width = 4
                   ),
 
@@ -58,6 +60,7 @@ server <- function(input, output, session) {
   data <- reactive({
 
     radio <- input$radio
+    win <- input$numInput
 
     req(input$file1)
 
@@ -72,6 +75,25 @@ server <- function(input, output, session) {
 
     if (radio == "norm"){
       df[,1:ncol(df)] <- as.data.frame(lapply(df[,1:ncol(df)], normalize))
+    }
+    
+    if (radio == "smoove"){
+      winDF <- df
+      win1 = win - 1
+      for (i in 1:ncol(df))
+      {
+        for (row in win:(nrow(df)-win1))
+        {
+          startRow <- row-win1
+          endRow <- row+win1
+        
+          winDF[row,i] <- mean(df[startRow:endRow,i])
+        
+        }
+      }
+      winDF <- winDF[win:(nrow(winDF)-win1),]
+      df <- winDF
+      
     }
 
     df <- as.data.frame(df)
